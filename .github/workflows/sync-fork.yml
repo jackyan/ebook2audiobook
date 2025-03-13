@@ -1,0 +1,23 @@
+name: Sync Fork with Upstream
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add Upstream and Fetch Changes
+        run: |
+          git remote add upstream https://github.com/DrewThomasson/ebook2audiobook.git
+          git fetch upstream
+          git checkout main
+          git merge upstream/main
+          git push origin main
