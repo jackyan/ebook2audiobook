@@ -8,6 +8,9 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write    # Needed to push changes to the repository content
+      workflows: write   # Needed to push changes to files in .github/workflows/
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
